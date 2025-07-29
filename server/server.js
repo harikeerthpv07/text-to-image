@@ -5,28 +5,17 @@ import connectDB from "./config/mongodb.js";
 import userRouter from "./routes/userRoutes.js";
 import imageRouter from "./routes/imageRoutes.js";
 
-const express = require("express");
-const cors = require("cors");
+const PORT = process.env.PORT || 4000;
 const app = express();
 
-// Allow requests from frontend
+app.use(express.json());
 app.use(
   cors({
-    origin: "https://text-to-image-4jnc.vercel.app/",
-    credentials: true, // if using cookies
+    origin: "https://text-to-image-4jnc.vercel.app", // or your frontend URL on Vercel
+    credentials: true,
   })
 );
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Backend is working!");
-});
-
-module.exports = app;
-
-app.use(express.json());
-app.use(cors());
 await connectDB();
 
 app.use("/api/user", userRouter);
